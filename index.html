@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootstrap Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 500px;
+            margin-top: 50px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        .btn-success{
+            width: 190px;
+            margin-right: 10px;
+        }
+        .btn-danger{
+            width: 190px;
+            margin-right: 10px;
+        }
+        .btn-close{
+            margin-top: -100px;
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h3 class="text-center text-success">USING FORM BOOTSTRAP</h3>
+
+    <div id="alertBox" class="alert alert-success d-none">
+        <strong>Form Submitted!</strong><br>
+        <b>Name:</b> <span id="nameOutput"></span><br>
+        <b>Email:</b> <span id="emailOutput"></span><br>
+        <b>Salary:</b> <span id="salaryOutput"></span><br>
+        <b>Hire Date:</b> <span id="dateOutput"></span>
+        <button type="button" class="btn-close float-end" onclick="closeAlert()"></button>
+    </div>
+
+    <form id="bootstrapForm">
+        <div class="mb-3">
+            <input type="text" id="name" class="form-control" placeholder="Full Name" required>
+        </div>
+        <div class="mb-3">
+            <input type="email" id="email" class="form-control" placeholder="Email Address" required>
+        </div>
+        <div class="mb-3">
+            <input type="number" id="salary" class="form-control" placeholder="Salary" required>
+        </div>
+        <div class="mb-3">
+            <input type="date" id="hireDate" class="form-control" required>
+        </div>
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-success">Submit</button>
+            <button type="reset" class="btn btn-danger">Reset</button>
+            <button type="button" class="btn btn-info text-white" onclick="goBack()">Back</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.getElementById("bootstrapForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent form submission
+
+        // Get form values
+        let name = document.getElementById("name").value;
+        let email = document.getElementById("email").value;
+        let salary = parseFloat(document.getElementById("salary").value);
+        let hireDate = document.getElementById("hireDate").value;
+
+        // Format salary as USD
+        let formattedSalary = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(salary);
+
+        // Convert date to "01-Feb-2025" format
+        let dateObj = new Date(hireDate);
+        let day = String(dateObj.getDate()).padStart(2, '0'); // Ensures two-digit day (e.g., 01, 09)
+        let monthAbbreviations = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        let month = monthAbbreviations[dateObj.getMonth()]; // Get month abbreviation
+        let year = dateObj.getFullYear(); // Get full year
+
+        let formattedDate = `${day}-${month}-${year}`; // Example: 01-Feb-2025
+
+        // Display values in the alert box
+        document.getElementById("nameOutput").textContent = name;
+        document.getElementById("emailOutput").textContent = email;
+        document.getElementById("salaryOutput").textContent = formattedSalary;
+        document.getElementById("dateOutput").textContent = formattedDate;
+
+        // Show alert
+        document.getElementById("alertBox").classList.remove("d-none");
+        alert(  "1. EmpName : "+ name+"\n" +
+                "2. Email : "+ email+"\n" +
+                "3. Salary : "+formattedSalary+"\n" +
+                "4. HireDate : "+formattedDate+""
+        );
+    });
+
+    function closeAlert() {
+        document.getElementById("alertBox").classList.add("d-none");
+    }
+
+    function goBack() {
+        window.history.back();
+    }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
